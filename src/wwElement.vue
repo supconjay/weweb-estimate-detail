@@ -205,8 +205,11 @@ export default {
       const key = f.patchKey || f.key;
       // Ready-to-save object keyed by the column name: bind Fields -> event.patch.
       const patch = { [key]: value };
+      // A field can route to its own workflow via `editEvent` (e.g. Estimated
+      // Duration -> "durationEdit"); otherwise it uses the shared "fieldEdit".
+      const eventName = f.editEvent || "fieldEdit";
       this.$emit("trigger-event", {
-        name: "fieldEdit",
+        name: eventName,
         event: { index: i, label: f.label, key, value, type: this.fType(f), patch, recordId: this.recordId, field: Object.assign({}, f, { value }) },
       });
     },

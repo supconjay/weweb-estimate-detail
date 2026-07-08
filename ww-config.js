@@ -4,6 +4,7 @@ export default {
     { name: "projectClick", label: { en: "On project name click" }, event: { value: "", recordId: "" } },
     { name: "addressClick", label: { en: "On address click" }, event: { address: "", recordId: "" } },
     { name: "fieldEdit", label: { en: "On field saved (inline edit)" }, event: { index: 0, label: "", key: "", value: "", type: "", patch: {}, recordId: "", field: {} } },
+    { name: "durationEdit", label: { en: "On estimated duration saved" }, event: { index: 0, label: "", key: "", value: "", type: "", patch: {}, recordId: "", field: {} } },
   ],
   properties: {
     // ---- data ----
@@ -54,7 +55,9 @@ export default {
     allowInlineEdit: { label: { en: "Allow inline field editing" }, type: "OnOff", defaultValue: true, bindable: true },
     // Each entry: { label, key, type: "text"|"multiline"|"date"|"url"|"link",
     //   editable: true|false, patchKey (column written by event.patch, defaults
-    //   to key), span: "full" (multiline defaults to full width) }
+    //   to key), span: "full" (multiline defaults to full width),
+    //   editEvent: "<trigger name>" — routes this field's save to its OWN
+    //   workflow instead of the shared "fieldEdit" (e.g. Estimated Duration). }
     summaryFields: {
       label: { en: "Summary fields" }, type: "Array", bindable: true, section: "settings",
       defaultValue: [
@@ -62,7 +65,7 @@ export default {
         { label: "Project Name", key: "project_uid", type: "link" },
         { label: "Creation Date", key: "Creation Date", type: "date" },
         { label: "Estimate Age", key: "Estimate Age" },
-        { label: "Estimated Duration", key: "estimated_duration" },
+        { label: "Estimated Duration", key: "estimated_duration", editable: true, editEvent: "durationEdit" },
         { label: "Approval Date", key: "Estimate Approval Date", type: "date" },
         { label: "Shared Photo Link", key: "shared_photo_link", type: "url" },
         { label: "WO#", key: "external_id", editable: true },
